@@ -1,7 +1,9 @@
 package br.com.onboard.schoolquery.pessoa.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -33,7 +35,7 @@ public class Professor extends Pessoa {
 	private Titulacao titulacao;
 
 	@OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
-	private List<Disciplina> disciplinas = new ArrayList<>();
+	private Set<Disciplina> disciplinas = new HashSet<>();
 
 	public Professor(String id, String nome, String email, String cpf, Titulacao titulacao) {
 		super(id, nome, email, cpf);

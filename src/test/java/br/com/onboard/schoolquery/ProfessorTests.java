@@ -17,7 +17,7 @@ import br.com.onboard.schoolquery.pessoa.service.ProfessorService;
 
 @SpringBootTest
 class ProfessorTests {
-	@Autowired
+	/*@Autowired
 	ProfessorService professorService;
 	
 	
@@ -52,5 +52,5 @@ class ProfessorTests {
 
 		assertThat(pageProfessoresDto.getSize()).isGreaterThan(0);
 	}
-
+*/
 }

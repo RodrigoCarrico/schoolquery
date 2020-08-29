@@ -3,7 +3,6 @@ package br.com.onboard.schoolquery.pessoa.dto;
 import br.com.onboard.schoolquery.pessoa.enums.FormaIngresso;
 import br.com.onboard.schoolquery.pessoa.model.Aluno;
 import br.com.onboard.schoolquery.turma.dto.TurmaDto;
-import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,9 +49,6 @@ public class AlunoDto {
         return alunos.map(AlunoDto::new);
     }
 
-    public static Aluno toAluno(String alunoDtoString) {
-        return new Gson().fromJson(alunoDtoString, Aluno.class);
-    }
 
 
 }
