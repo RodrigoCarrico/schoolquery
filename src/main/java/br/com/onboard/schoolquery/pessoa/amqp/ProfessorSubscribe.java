@@ -1,6 +1,7 @@
 package br.com.onboard.schoolquery.pessoa.amqp;
 
 import br.com.onboard.schoolquery.config.amqp.SCHOOLChannel;
+import br.com.onboard.schoolquery.pessoa.amqp.event.ProfessorAlteradoEvent;
 import br.com.onboard.schoolquery.pessoa.amqp.event.ProfessorCriadoEvent;
 import br.com.onboard.schoolquery.pessoa.repository.service.ProfessorService;
 import lombok.AllArgsConstructor;
@@ -17,9 +18,15 @@ public class ProfessorSubscribe {
 
     @StreamListener(target = SCHOOLChannel.SCHOOL_INPUT, condition = ProfessorCriadoEvent.CONDITIONAL_EXPRESSION)
     public void ProfessorCriado(ProfessorCriadoEvent message) {
-        System.out.println("Teste de MESA" + message.toString());
+        System.out.println("Professor subscribe Criando: " + message.toString());
         professorService.on(message);
 
+    }
+
+    @StreamListener(target = SCHOOLChannel.SCHOOL_INPUT, condition = ProfessorAlteradoEvent.CONDITIONAL_EXPRESSION)
+    public void ProfessorAlterado(ProfessorAlteradoEvent message) {
+        System.out.println("Professor subscribe Alterado: " + message.toString());
+        professorService.on(message);
     }
 
 }

@@ -3,7 +3,6 @@ package br.com.onboard.schoolquery.pessoa.dto;
 import br.com.onboard.schoolquery.disciplina.dto.DisciplinaDto;
 import br.com.onboard.schoolquery.pessoa.enums.Titulacao;
 import br.com.onboard.schoolquery.pessoa.repository.model.Professor;
-import br.com.onboard.schoolquery.pessoa.repository.view.ProfessorView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,17 +24,17 @@ public class ProfessorDto {
 
     private Set<DisciplinaDto> disciplinas;
 
-    public ProfessorDto(ProfessorView professor) {
+    public ProfessorDto(Professor professor) {
         this.id = professor.getId();
         this.nome = professor.getNome();
         this.email = professor.getEmail();
         this.cpf = professor.getCpf();
         this.titulacao = professor.getTitulacao();
-        this.disciplinas = DisciplinaDto.converter(professor.getDisciplinas());
+        this.disciplinas = (Set) professor.getDisciplinas();
     }
 
 
-    public static Page<ProfessorDto> from(Page<ProfessorView> professores) {
+    public static Page<ProfessorDto> from(Page<Professor> professores) {
         return professores.map(ProfessorDto::new);
     }
 

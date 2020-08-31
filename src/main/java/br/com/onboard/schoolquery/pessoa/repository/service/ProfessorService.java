@@ -1,9 +1,13 @@
 package br.com.onboard.schoolquery.pessoa.repository.service;
 
+import br.com.onboard.schoolquery.disciplina.model.Disciplina;
+import br.com.onboard.schoolquery.disciplina.repository.DisciplinaRepository;
+import br.com.onboard.schoolquery.pessoa.amqp.event.ProfessorAlteradoEvent;
 import br.com.onboard.schoolquery.pessoa.amqp.event.ProfessorCriadoEvent;
-import br.com.onboard.schoolquery.pessoa.repository.model.ProfessorDisciplina;
-import br.com.onboard.schoolquery.pessoa.repository.view.ProfessorView;
-import br.com.onboard.schoolquery.pessoa.repository.view.ProfessorViewRepository;
+import br.com.onboard.schoolquery.pessoa.dto.ProfessorDto;
+import br.com.onboard.schoolquery.pessoa.enums.Titulacao;
+import br.com.onboard.schoolquery.pessoa.repository.ProfessorRepository;
+import br.com.onboard.schoolquery.pessoa.repository.model.Professor;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -12,66 +16,79 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.onboard.schoolquery.pessoa.dto.ProfessorDto;
-import br.com.onboard.schoolquery.pessoa.enums.Titulacao;
-import br.com.onboard.schoolquery.pessoa.repository.model.Professor;
-import br.com.onboard.schoolquery.pessoa.repository.ProfessorRepository;
-
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-@Transactional
+
 public class ProfessorService {
 
-	@Autowired
-	ProfessorRepository professorRepository;
+    @Autowired
+    ProfessorRepository professorRepository;
 
-	@Autowired
-	ProfessorViewRepository professorViewRepository;
+    @Autowired
+    DisciplinaRepository disciplinaRepository;
 
-	public void on(final ProfessorCriadoEvent event) {
+    @Transactional
+    public void on(final ProfessorAlteradoEvent event) {
 
-		var disciplinas = event.getDisciplinas() != null
-				? event.getDisciplinas()
-				.stream()
-				.map(disciplina -> ProfessorDisciplina.of(disciplina.getDisciplinaId(), event.getId()))
-				.collect(Collectors.toSet())
-				: new HashSet<ProfessorDisciplina>();
+        Optional<Professor> optional = professorRepository.findById(event.getId());
+        optional.ifPresent(professor -> {
+            professor.setCpf(event.getCpf());
+            professor.setEmail(event.getEmail());
+            professor.setNome(event.getNome());
+            professor.setTitulacao(event.getTitulacao());
+            professorRepository.flush();
+        });
+    }
 
-		var professor = Professor.builder()
-				.id(event.getId())
-				.cpf(event.getCpf())
-				.email(event.getEmail())
-				.nome(event.getNome())
-				.titulacao(event.getTitulacao())
-				.disciplinas(disciplinas)
-				.build();
-		professorRepository.save(professor);
-	}
+    @Transactional
+    public void on(final ProfessorCriadoEvent event) {
 
-	public Page<ProfessorDto> getProfessores(
-			Pageable pageable, 
-			String id, 
-			String nome, 
-			String email, 
-			String cpf,
-			Titulacao titulacao) {
+        var disciplinas = event.getDisciplinas() != null
+                ? event.getDisciplinas()
+                .stream()
+                .map(disciplina -> {
+                    Disciplina disciplinaEvent = disciplinaRepository.findById(disciplina.getDisciplinaId()).get();
+                    return disciplinaEvent;
+                })
+                .collect(Collectors.toSet())
+                : new HashSet<Disciplina>();
 
-		ProfessorView professorView = ProfessorView.builder()
-				.cpf(cpf)
-				.titulacao(titulacao)
-				.nome(nome)
-				.email(email)
-				.id(id)
-				.build();
-		
-		Example<ProfessorView> example = Example.of(professorView);
+        var professor = Professor.builder()
+                .id(event.getId())
+                .cpf(event.getCpf())
+                .email(event.getEmail())
+                .nome(event.getNome())
+                .titulacao(event.getTitulacao())
+                .disciplinas(disciplinas)
+                .build();
+        professorRepository.save(professor);
+    }
 
-		Page<ProfessorView> pageProfessores = professorViewRepository.findAll(example, pageable);
+    public Page<ProfessorDto> getProfessores(
+            Pageable pageable,
+            String id,
+            String nome,
+            String email,
+            String cpf,
+            Titulacao titulacao) {
 
-		return ProfessorDto.from(pageProfessores);
-	}
+        Professor professorView = Professor.builder()
+                .cpf(cpf)
+                .titulacao(titulacao)
+                .nome(nome)
+                .email(email)
+                .id(id)
+                .build();
+
+        Example<Professor> example = Example.of(professorView);
+
+        Page<Professor> pageProfessores = professorRepository.findAll(example, pageable);
+
+        return ProfessorDto.from(pageProfessores);
+    }
 
 }
