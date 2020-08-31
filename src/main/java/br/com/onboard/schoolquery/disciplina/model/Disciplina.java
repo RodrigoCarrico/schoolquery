@@ -1,23 +1,21 @@
 package br.com.onboard.schoolquery.disciplina.model;
 
-import java.util.List;
+import br.com.onboard.schoolquery.pessoa.repository.model.Professor;
+import br.com.onboard.schoolquery.pessoa.repository.model.ProfessorDisciplina;
+import br.com.onboard.schoolquery.turma.model.Turma;
+import com.sun.istack.NotNull;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
-
-import org.hibernate.validator.constraints.Length;
-
-import com.sun.istack.NotNull;
-
-import br.com.onboard.schoolquery.pessoa.model.Professor;
-import br.com.onboard.schoolquery.turma.model.Turma;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import java.util.List;
 
 @ToString
 @Getter
@@ -27,7 +25,7 @@ import lombok.ToString;
 public class Disciplina {
 	
 	@Id
-	private Long id;
+	private String id;
 	@NotNull @NotEmpty @Length(min=1, max = 100)
 	private String descricao;
 	@NotNull @NotEmpty @Length(min=1, max = 2)
@@ -35,19 +33,20 @@ public class Disciplina {
 	@NotNull @NotEmpty
 	private int cargaHoraria;
 	
-	@ManyToOne
-	private Professor professor;
+	//@ManyToOne
+	//private Professor professor;
 	
 	@ManyToMany(mappedBy = "disciplinas")
 	private List<Turma> turmas;
 	
 	public Disciplina(@NotNull @NotEmpty @Length(min = 1, max = 100) String descricao,
-			@NotNull @NotEmpty @Length(min = 1, max = 2) String sigla, @NotNull @NotEmpty int cargaHoraria,
-			Professor professor) {
+					  @NotNull @NotEmpty @Length(min = 1, max = 2) String sigla,
+					  @NotNull @NotEmpty int cargaHoraria){
+			//Professor professor) {
 		this.descricao = descricao;
 		this.sigla = sigla;
 		this.cargaHoraria = cargaHoraria;
-		this.professor = professor;
+		//this.professor = professor;
 	}
 	
 	

@@ -1,7 +1,6 @@
 package br.com.onboard.schoolquery.pessoa.amqp.event;
 
 import br.com.onboard.schoolquery.pessoa.enums.Titulacao;
-import br.com.onboard.schoolquery.pessoa.model.Professor;
 import lombok.*;
 
 import java.util.Set;
@@ -25,8 +24,6 @@ public class ProfessorCriadoEvent {
     @AllArgsConstructor(staticName = "from")
     @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
     public static final class ProfessorDisciplinaEvent {
-        private final String disciplina;
+        private final String disciplinaId;
     }
-
-
 }

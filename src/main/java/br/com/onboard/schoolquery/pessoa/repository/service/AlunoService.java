@@ -1,8 +1,8 @@
-package br.com.onboard.schoolquery.pessoa.service;
+package br.com.onboard.schoolquery.pessoa.repository.service;
 
 import br.com.onboard.schoolquery.pessoa.dto.AlunoDto;
 import br.com.onboard.schoolquery.pessoa.enums.FormaIngresso;
-import br.com.onboard.schoolquery.pessoa.model.Aluno;
+import br.com.onboard.schoolquery.pessoa.repository.model.Aluno;
 import br.com.onboard.schoolquery.pessoa.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

@@ -2,7 +2,7 @@ package br.com.onboard.schoolquery.pessoa.api;
 
 import br.com.onboard.schoolquery.pessoa.dto.AlunoDto;
 import br.com.onboard.schoolquery.pessoa.enums.FormaIngresso;
-import br.com.onboard.schoolquery.pessoa.service.AlunoService;
+import br.com.onboard.schoolquery.pessoa.repository.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;

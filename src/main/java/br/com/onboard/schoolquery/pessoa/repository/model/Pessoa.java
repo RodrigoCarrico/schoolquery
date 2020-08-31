@@ -1,11 +1,6 @@
-package br.com.onboard.schoolquery.pessoa.model;
+package br.com.onboard.schoolquery.pessoa.repository.model;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -20,13 +15,12 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @EqualsAndHashCode
 @NoArgsConstructor
-public abstract class Pessoa implements Serializable{
+@MappedSuperclass
+public abstract class Pessoa {
 
-	private static final long serialVersionUID = 2184237278320112029L;
+	// private static final long serialVersionUID = 2184237278320112029L;
 	@Id
 	private String id;
 	@NotNull @NotEmpty @Length(min=1, max = 255)

@@ -14,7 +14,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.onboard.schoolquery.disciplina.model.Disciplina;
-import br.com.onboard.schoolquery.pessoa.model.Aluno;
+import br.com.onboard.schoolquery.pessoa.repository.model.Aluno;
 
 @ToString
 @Getter

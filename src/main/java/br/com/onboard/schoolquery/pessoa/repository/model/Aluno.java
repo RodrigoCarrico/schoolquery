@@ -1,4 +1,4 @@
-package br.com.onboard.schoolquery.pessoa.model;
+package br.com.onboard.schoolquery.pessoa.repository.model;
 
 import java.util.List;
 
@@ -31,7 +31,9 @@ public class Aluno extends Pessoa {
 	private FormaIngresso formaIngresso;
 
 	@ManyToMany
-	@JoinTable(name = "aluno_turma", joinColumns = @JoinColumn(name = "ALUNO_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "TURMA_ID", referencedColumnName = "ID"))
+	@JoinTable(name = "aluno_turma", joinColumns =
+	@JoinColumn(name = "ALUNO_ID", referencedColumnName = "ID"),
+			inverseJoinColumns = @JoinColumn(name = "TURMA_ID", referencedColumnName = "ID"))
 	private List<Turma> turmas;
 
 	@Builder

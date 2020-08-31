@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.onboard.schoolquery.pessoa.dto.ProfessorDto;
 import br.com.onboard.schoolquery.pessoa.enums.Titulacao;
-import br.com.onboard.schoolquery.pessoa.service.ProfessorService;
+import br.com.onboard.schoolquery.pessoa.repository.service.ProfessorService;
 
 
 @RestController

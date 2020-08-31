@@ -1,7 +1,7 @@
 package br.com.onboard.schoolquery.pessoa.dto;
 
 import br.com.onboard.schoolquery.pessoa.enums.FormaIngresso;
-import br.com.onboard.schoolquery.pessoa.model.Aluno;
+import br.com.onboard.schoolquery.pessoa.repository.model.Aluno;
 import br.com.onboard.schoolquery.turma.dto.TurmaDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
