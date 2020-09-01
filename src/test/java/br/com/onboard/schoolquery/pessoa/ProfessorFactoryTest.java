@@ -23,7 +23,7 @@ public class ProfessorFactoryTest {
     private final String cpf = "00000000003";
     private final String email = "teste3@teste3.com.br";
     private final String nome = "teste3 de inclusao3 de professor";
-    private final Titulacao titulacao = Titulacao.DOUTOR;
+    private final Titulacao titulacao = Titulacao.PHD;
 
 
     private final String id2 = UUID.randomUUID().toString();

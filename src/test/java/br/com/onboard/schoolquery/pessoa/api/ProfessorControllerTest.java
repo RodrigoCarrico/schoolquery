@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -38,7 +37,7 @@ public class ProfessorControllerTest {
         mockMvc.perform(
                 get(ProfessorController.PATH + "/find").param("nome", professorFactoryTest.getNome()))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", Matchers.hasSize(1)))
+                .andExpect(jsonPath("$.totalElements", Matchers.greaterThan(0)))
                 .andExpect(jsonPath("$.content[0].nome", is(professorFactoryTest.getNome())));
     }
 
@@ -48,7 +47,7 @@ public class ProfessorControllerTest {
         mockMvc.perform(
                 get(ProfessorController.PATH + "/find").param("email", professorFactoryTest.getEmail()))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", Matchers.hasSize(1)))
+                .andExpect(jsonPath("$.totalElements", Matchers.greaterThan(0)))
                 .andExpect(jsonPath("$.content[0].email", is(professorFactoryTest.getEmail())));
     }
 
@@ -58,7 +57,7 @@ public class ProfessorControllerTest {
         mockMvc.perform(
                 get(ProfessorController.PATH + "/find").param("titulacao", professorFactoryTest.getTitulacao().name()))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", Matchers.hasSize(1)))
+                .andExpect(jsonPath("$.totalElements", Matchers.greaterThan(0)))
                 .andExpect(jsonPath("$.content[0].titulacao", is(professorFactoryTest.getTitulacao().name())));
     }
 
@@ -68,7 +67,7 @@ public class ProfessorControllerTest {
         mockMvc.perform(
                 get(ProfessorController.PATH + "/find").param("cpf", professorFactoryTest.getCpf()))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", Matchers.hasSize(1)))
+                .andExpect(jsonPath("$.totalElements", Matchers.greaterThan(0)))
                 .andExpect(jsonPath("$.content[0].cpf", is(professorFactoryTest.getCpf())));
     }
 
@@ -78,7 +77,7 @@ public class ProfessorControllerTest {
         mockMvc.perform(
                 get(ProfessorController.PATH + "/find").param("id", professorFactoryTest.getId()))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", Matchers.hasSize(1)))
+                .andExpect(jsonPath("$.totalElements", Matchers.greaterThan(0)))
                 .andExpect(jsonPath("$.content[0].id", is(professorFactoryTest.getId())));
     }
 
@@ -88,14 +87,14 @@ public class ProfessorControllerTest {
         mockMvc.perform(
                 get(ProfessorController.PATH + "/find"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.content", Matchers.hasSize(3)));
+                .andExpect(jsonPath("$.totalElements", Matchers.greaterThan(1)));
     }
 
     @Test
     @DisplayName("Teste de Pesquisa Sem resultado")
     public void getProfessoresSemResultado() throws Exception {
         mockMvc.perform(
-                get(ProfessorController.PATH + "/find").param("nome","qualquercoisa"))
+                get(ProfessorController.PATH + "/find").param("nome","qualquercoisa tralala"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", Matchers.hasSize(0)));
     }
