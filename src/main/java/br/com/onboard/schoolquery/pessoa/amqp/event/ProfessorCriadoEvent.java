@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.Set;
 
 @Data
-@Builder(access = AccessLevel.PRIVATE)
+@Builder()
 public class ProfessorCriadoEvent {
 
     public static final String NAME = "ProfessorCriadoEvent";

@@ -10,7 +10,6 @@ public final class SCHOOLChannel {
 
     public static final String SCHOOL_INPUT = "school-input-events";
 
-
     public  interface SchoolExchangeInput {
         @Input(SCHOOLChannel.SCHOOL_INPUT)
         SubscribableChannel input();
