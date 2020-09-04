@@ -14,7 +14,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.onboard.schoolquery.disciplina.model.Disciplina;
-import br.com.onboard.schoolquery.pessoa.repository.model.Aluno;
+import br.com.onboard.schoolquery.pessoa.aluno.model.Aluno;
 
 @ToString
 @Getter
@@ -24,20 +24,16 @@ import br.com.onboard.schoolquery.pessoa.repository.model.Aluno;
 @NoArgsConstructor
 public class Turma {
 	@Id
-	private Long Id;
+	private String id;
 	@NotNull
-	@NotEmpty
 	@Length(min = 1, max = 255)
 	private String descricao;
 	@NotNull
-	@NotEmpty
-	private int anoLetivo;
+	private Integer anoLetivo;
 	@NotNull
-	@NotEmpty
-	private int periodoLetivo;
+	private Integer periodoLetivo;
 	@NotNull
-	@NotEmpty
-	private int numeroVagas;
+	private Integer numeroVagas;
 
 	@ManyToMany(mappedBy = "turmas")
 	private List<Aluno> alunos;
@@ -51,10 +47,10 @@ public class Turma {
 	            @JoinColumn(name="DISCIPLINA_ID", referencedColumnName="ID")
 	    )
 	private List<Disciplina> disciplinas;
-
-	public Turma(@NotNull @NotEmpty @Length(min = 1, max = 255) String descricao, @NotNull @NotEmpty int anoLetivo,
+    @Builder
+	public Turma(String id, @NotNull @NotEmpty @Length(min = 1, max = 255) String descricao, @NotNull @NotEmpty int anoLetivo,
 			@NotNull @NotEmpty int periodoLetivo, @NotNull @NotEmpty int numeroVagas) {
-		super();
+    	this.id = id;
 		this.descricao = descricao;
 		this.anoLetivo = anoLetivo;
 		this.periodoLetivo = periodoLetivo;

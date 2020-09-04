@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 public class TurmaDto {
-    private Long id;
+    private String id;
     private String descricao;
     private int anoLetivo;
     private int periodoLetivo;

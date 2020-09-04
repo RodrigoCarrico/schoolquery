@@ -1,6 +1,6 @@
 package br.com.onboard.schoolquery.disciplina.model;
 
-import br.com.onboard.schoolquery.pessoa.repository.model.Professor;
+import br.com.onboard.schoolquery.pessoa.professor.model.Professor;
 import br.com.onboard.schoolquery.turma.model.Turma;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
