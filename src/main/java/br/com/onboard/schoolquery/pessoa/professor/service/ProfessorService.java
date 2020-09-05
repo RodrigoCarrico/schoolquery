@@ -47,23 +47,12 @@ public class ProfessorService {
     @Transactional
     public void on(final ProfessorCriadoEvent event) {
 
-        var disciplinas = event.getDisciplinas() != null
-                ? event.getDisciplinas()
-                .stream()
-                .map(disciplina -> {
-                    Disciplina disciplinaEvent = disciplinaRepository.findById(disciplina.getDisciplinaId()).get();
-                    return disciplinaEvent;
-                })
-                .collect(Collectors.toSet())
-                : new HashSet<Disciplina>();
-
         var professor = Professor.builder()
                 .id(event.getId())
                 .cpf(event.getCpf())
                 .email(event.getEmail())
                 .nome(event.getNome())
                 .titulacao(event.getTitulacao())
-                .disciplinas(disciplinas)
                 .build();
         professorRepository.save(professor);
     }

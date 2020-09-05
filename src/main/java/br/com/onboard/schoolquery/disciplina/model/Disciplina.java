@@ -1,54 +1,56 @@
 package br.com.onboard.schoolquery.disciplina.model;
 
+import br.com.onboard.schoolquery.disciplina.dto.DisciplinaDto;
 import br.com.onboard.schoolquery.pessoa.professor.model.Professor;
 import br.com.onboard.schoolquery.turma.model.Turma;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.domain.Page;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-@Getter
+@Data
 @Entity
+@Table(name = "disciplina")
 @NoArgsConstructor
 public class Disciplina {
-
     @Id
     private String id;
     @NotNull
-    @NotEmpty
     @Length(min = 1, max = 100)
     private String descricao;
     @NotNull
-    @NotEmpty
     @Length(min = 1, max = 2)
     private String sigla;
     @NotNull
-    @NotEmpty
     private Integer cargaHoraria;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "professor_id")
-    @Setter
     private Professor professor;
 
-    @ManyToMany(mappedBy = "disciplinas")
+    @ManyToMany(mappedBy = "disciplinas", fetch = FetchType.EAGER)
     private List<Turma> turmas;
 
-    public Disciplina(String id, @NotNull @NotEmpty @Length(min = 1, max = 100) String descricao,
-                      @NotNull @NotEmpty @Length(min = 1, max = 2) String sigla,
-                      @NotNull @NotEmpty Integer cargaHoraria,
+    @Builder
+    public Disciplina(String id, String descricao,
+                      String sigla,
+                      Integer cargaHoraria,
                       Professor professor) {
         this.id = id;
         this.descricao = descricao;
         this.sigla = sigla;
         this.cargaHoraria = cargaHoraria;
         this.professor = professor;
+    }
+
+    public static Page<DisciplinaDto> from(Page<Disciplina> pageDisciplinas) {
+        return pageDisciplinas.map(DisciplinaDto::new);
     }
 }

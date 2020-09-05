@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
+
 @AllArgsConstructor
 @EnableBinding(SCHOOLChannel.SchoolExchangeInput.class)
 public class AlunoSubscribe {

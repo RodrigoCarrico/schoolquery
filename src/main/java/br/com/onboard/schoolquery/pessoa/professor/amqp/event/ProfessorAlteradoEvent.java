@@ -17,13 +17,6 @@ public class ProfessorAlteradoEvent {
     private final String email;
     private final String cpf;
     private final Titulacao titulacao;
-    private final Set<ProfessorDisciplinaEvent> disciplinas;
 
-    @Getter
-    @AllArgsConstructor(staticName = "from")
-    @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-    public static final class ProfessorDisciplinaEvent {
-        private final String disciplinaId;
-    }
 }
 

@@ -33,12 +33,9 @@ public class Professor extends Pessoa {
     private Set<Disciplina> disciplinas;
 
     @Builder
-    public Professor(String id, String nome, String email, String cpf, Titulacao titulacao, Set<Disciplina> disciplinas) {
+    public Professor(String id, String nome, String email, String cpf, Titulacao titulacao) {
         super(id, nome, email, cpf);
         this.titulacao = titulacao;
-        if (disciplinas !=null && !disciplinas.isEmpty()) {
-            this.disciplinas = disciplinas;
-        }
     }
 
 
