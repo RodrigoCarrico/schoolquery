@@ -1,16 +1,15 @@
 package br.com.onboard.schoolquery.turma.model;
 
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.onboard.schoolquery.disciplina.model.Disciplina;
@@ -35,10 +34,12 @@ public class Turma {
 	@NotNull
 	private Integer numeroVagas;
 
-	@ManyToMany(mappedBy = "turmas")
-	private List<Aluno> alunos;
+	@ManyToMany(mappedBy = "turmas",fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	private Set<Aluno> alunos;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	@JoinTable(
 	        name="turma_disciplina",
 	        joinColumns=
@@ -46,15 +47,16 @@ public class Turma {
 	        inverseJoinColumns=
 	            @JoinColumn(name="DISCIPLINA_ID", referencedColumnName="ID")
 	    )
-	private List<Disciplina> disciplinas;
+	private Set<Disciplina> disciplinas;
     @Builder
-	public Turma(String id, @NotNull @NotEmpty @Length(min = 1, max = 255) String descricao, @NotNull @NotEmpty int anoLetivo,
-			@NotNull @NotEmpty int periodoLetivo, @NotNull @NotEmpty int numeroVagas) {
+	public Turma(String id, @NotNull @NotEmpty @Length(min = 1, max = 255) String descricao, @NotNull Integer anoLetivo,
+			@NotNull Integer periodoLetivo, @NotNull Integer numeroVagas, Set<Disciplina> disciplinas) {
     	this.id = id;
 		this.descricao = descricao;
 		this.anoLetivo = anoLetivo;
 		this.periodoLetivo = periodoLetivo;
 		this.numeroVagas = numeroVagas;
+		this.disciplinas = disciplinas;
 	}
 
 }

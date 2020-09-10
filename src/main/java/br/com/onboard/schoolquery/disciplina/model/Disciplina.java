@@ -4,6 +4,7 @@ import br.com.onboard.schoolquery.disciplina.dto.DisciplinaDto;
 import br.com.onboard.schoolquery.pessoa.professor.model.Professor;
 import br.com.onboard.schoolquery.turma.model.Turma;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +37,7 @@ public class Disciplina {
     private Professor professor;
 
     @ManyToMany(mappedBy = "disciplinas", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Turma> turmas;
 
     @Builder

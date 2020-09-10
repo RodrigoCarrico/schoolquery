@@ -20,7 +20,6 @@ import lombok.ToString;
 @MappedSuperclass
 public abstract class Pessoa {
 
-	// private static final long serialVersionUID = 2184237278320112029L;
 	@Id
 	private String id;
 	@NotNull @NotEmpty @Length(min=1, max = 255)

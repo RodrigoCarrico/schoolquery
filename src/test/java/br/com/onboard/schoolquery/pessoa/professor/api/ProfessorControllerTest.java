@@ -31,61 +31,61 @@ class ProfessorControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private static Professor professor1 = ProfessorFactory.buildProfessor1();;
+    private static Professor professor3 = ProfessorFactory.buildProfessor3();;
 
     @BeforeAll
     void setup() {
-        ProfessorFactory.salvaBD(professor1, professorRepository);
+        ProfessorFactory.salvaBD(professor3, professorRepository);
     }
 
     @Test
     @DisplayName("Teste de Pesquisa de professores por nome")
     void getProfessoresByNome() throws Exception {
         mockMvc.perform(
-                get(ProfessorController.PATH + "/find").param("nome", professor1.getNome()))
+                get(ProfessorController.PATH + "/find").param("nome", professor3.getNome()))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", Matchers.hasSize(1)))
-                .andExpect(jsonPath("$.content[0].nome", is(professor1.getNome())));
+                .andExpect(jsonPath("$.content[0].nome", is(professor3.getNome())));
     }
 
     @Test
     @DisplayName("Teste de Pesquisa de professores por email")
     void getProfessoresByEmail() throws Exception {
         mockMvc.perform(
-                get(ProfessorController.PATH + "/find").param("email", professor1.getEmail()))
+                get(ProfessorController.PATH + "/find").param("email", professor3.getEmail()))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", Matchers.hasSize(1)))
-                .andExpect(jsonPath("$.content[0].email", is(professor1.getEmail())));
+                .andExpect(jsonPath("$.content[0].email", is(professor3.getEmail())));
     }
 
     @Test
     @DisplayName("Teste de Pesquisa de professores por Titulacao")
     void getProfessoresByTitulacao() throws Exception {
         mockMvc.perform(
-                get(ProfessorController.PATH + "/find").param("titulacao", professor1.getTitulacao().name()))
+                get(ProfessorController.PATH + "/find").param("titulacao", professor3.getTitulacao().name()))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.totalElements", Matchers.greaterThan(0)))
-                .andExpect(jsonPath("$.content[0].titulacao", is(professor1.getTitulacao().name())));
+                .andExpect(jsonPath("$.content[0].titulacao", is(professor3.getTitulacao().name())));
     }
 
     @Test
     @DisplayName("Teste de Pesquisa de professores por cpf")
     void getProfessoresByCpf() throws Exception {
         mockMvc.perform(
-                get(ProfessorController.PATH + "/find").param("cpf", professor1.getCpf()))
+                get(ProfessorController.PATH + "/find").param("cpf", professor3.getCpf()))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.content", Matchers.hasSize(1)))
-                .andExpect(jsonPath("$.content[0].cpf", is(professor1.getCpf())));
+                .andExpect(jsonPath("$.content[0].cpf", is(professor3.getCpf())));
     }
 
     @Test
     @DisplayName("Teste de Pesquisa de professores por Id")
     void getProfessoresById() throws Exception {
         mockMvc.perform(
-                get(ProfessorController.PATH + "/find").param("id", professor1.getId()))
+                get(ProfessorController.PATH + "/find").param("id", professor3.getId()))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.totalElements", Matchers.greaterThan(0)))
-                .andExpect(jsonPath("$.content[0].id", is(professor1.getId())));
+                .andExpect(jsonPath("$.content[0].id", is(professor3.getId())));
     }
 
     @Test

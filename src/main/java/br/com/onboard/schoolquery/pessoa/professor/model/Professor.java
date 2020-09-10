@@ -3,6 +3,7 @@ package br.com.onboard.schoolquery.pessoa.professor.model;
 import br.com.onboard.schoolquery.disciplina.model.Disciplina;
 import br.com.onboard.schoolquery.pessoa.enums.Titulacao;
 import br.com.onboard.schoolquery.pessoa.repository.model.Pessoa;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -28,8 +29,9 @@ public class Professor extends Pessoa {
     private Titulacao titulacao;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "professor")
     @Fetch(value = FetchMode.SELECT)
+    @JsonIgnore
     private Set<Disciplina> disciplinas;
 
     @Builder

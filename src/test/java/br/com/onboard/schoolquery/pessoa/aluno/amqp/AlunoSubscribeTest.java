@@ -8,8 +8,11 @@ import br.com.onboard.schoolquery.pessoa.aluno.repository.AlunoRepository;
 import br.com.onboard.schoolquery.pessoa.enums.FormaIngresso;
 import br.com.onboard.schoolquery.turma.model.Turma;
 import br.com.onboard.schoolquery.turma.repository.TurmaRepository;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,6 +24,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AlunoSubscribeTest {
 
     @Autowired
@@ -38,23 +42,29 @@ class AlunoSubscribeTest {
     private final String nome = "teste de inclusao de professor";
     private final Integer matricula = 1234;
     private final FormaIngresso formaIngresso = FormaIngresso.VESTIBULAR;
-    private final Set<AlunoCriadoEvent.AlunoTurmaCriadoEvent> turmas = new HashSet<>(
-            Arrays.asList(AlunoCriadoEvent.AlunoTurmaCriadoEvent.from("1"), AlunoCriadoEvent.AlunoTurmaCriadoEvent.from("2"), AlunoCriadoEvent.AlunoTurmaCriadoEvent.from("3")));
+    private Set<AlunoCriadoEvent.AlunoTurmaCriadoEvent> turmas;
 
-    private final Set<AlunoAlteradoEvent.AlunoTurmaAlteradoEvent> turmas2 = new HashSet<>(
-            Arrays.asList(AlunoAlteradoEvent.AlunoTurmaAlteradoEvent.from("1"), AlunoAlteradoEvent.AlunoTurmaAlteradoEvent.from("2"), AlunoAlteradoEvent.AlunoTurmaAlteradoEvent.from("3")));
+    private Set<AlunoAlteradoEvent.AlunoTurmaAlteradoEvent> turmas2;
 
-    private final String turmaId = "1";
+    private final String turmaId = UUID.randomUUID().toString();
     private final String descricao = "Turma A";
     private final Integer anoLetivo = 2020;
     private final Integer periodoLetivo = 200;
     private final Integer numeroVagas = 60;
 
-    private final String turmaId2 = "2";
+    private final String turmaId2 = UUID.randomUUID().toString();
     private final String descricao2 = "Turma B";
     private final Integer anoLetivo2 = 2020;
     private final Integer periodoLetivo2 = 200;
     private final Integer numeroVagas2 = 30;
+
+    @BeforeAll()
+    void setup(){
+        turmas = new HashSet<>(
+                Arrays.asList(AlunoCriadoEvent.AlunoTurmaCriadoEvent.from("1"), AlunoCriadoEvent.AlunoTurmaCriadoEvent.from("2"), AlunoCriadoEvent.AlunoTurmaCriadoEvent.from("3")));
+        turmas2 = new HashSet<>(
+                Arrays.asList(AlunoAlteradoEvent.AlunoTurmaAlteradoEvent.from(turmaId), AlunoAlteradoEvent.AlunoTurmaAlteradoEvent.from(turmaId2), AlunoAlteradoEvent.AlunoTurmaAlteradoEvent.from("3")));
+    }
 
     @Test
     @DisplayName("Testa criação de registro Aluno na base de dados da Query")

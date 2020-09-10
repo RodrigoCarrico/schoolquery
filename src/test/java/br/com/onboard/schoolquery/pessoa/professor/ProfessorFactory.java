@@ -24,6 +24,12 @@ public class ProfessorFactory {
     private static final String nome2 = "teste2 de inclusao2 de professor2";
     private static final Titulacao titulacao2 = Titulacao.MESTRE;
 
+    private static final String id3 = UUID.randomUUID().toString();
+    private static final String cpf3 = "11111111113";
+    private static final String email3 = "teste43@teste43.com.br";
+    private static final String nome3 = "teste33 de inclusao33 de professor33";
+    private static final Titulacao titulacao3 = Titulacao.MESTRE;
+
     public static Professor buildProfessor1(){
        return Professor.builder()
                 .cpf(cpf)
@@ -43,6 +49,16 @@ public class ProfessorFactory {
                 .id(id2)
                 .nome(nome2)
                 .titulacao(titulacao2)
+                .build();
+    }
+
+    public static Professor buildProfessor3(){
+        return Professor.builder()
+                .cpf(cpf3)
+                .email(email3)
+                .id(id3)
+                .nome(nome3)
+                .titulacao(titulacao3)
                 .build();
     }
 
